@@ -1,0 +1,380 @@
+﻿@model List<BuyMeABible.Data.Model.Book> 
+
+<div class="container container-alt">
+
+
+    <div class="row wall">
+        <div class="col-md-8">
+
+            @if (Model != null)
+            {
+                foreach (var book in Model)
+                {
+                    var headerBg = book.ListingType == "Request" ? "bgm-cyan" : "";
+                    <div class="card w-item">
+                        <div class="card-header @headerBg">
+                            <div class="media">
+                                <div class="pull-left">
+                                    <img class="avatar-img" src="/Content/materialized/img/demo/profile-pics/1.jpg" alt="">
+                                </div>
+
+                                <div class="media-body">
+                                    <h2>
+                                        @book.Title
+                                        <small>Posted by <a href="@Url.Action("Index", "Profile", new { userId = book.UserId})">@book.UserName</a>. Expires <span class="date-convert-to-local" data-date="@book.Expires"></span></small>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body card-padding">
+                            @Html.Raw(book.Details)
+
+                            @if (book.Images != null)
+                            {
+                                if (book.Images.Any())
+                                {
+                                    <div class="wi-preview lightbox clearfix">
+                                        @foreach (var img in book.Images)
+                                        {
+                                            var imgPath = string.Format(@"/BookPhotos/{0}", Path.GetFileName(img));
+                                            <div class="wip-item" data-src="@imgPath"
+                                                 style="background-image: url(@imgPath);">
+                                                <img src="@imgPath" alt="">
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            }
+
+                            <div class="wi-stats clearfix">
+                                <div class="wis-numbers" style="float:right;">
+                                    @*<span><i class="zmdi zmdi-comments"></i> 36</span>*@
+                                    @if (book.Likes != null)
+                                    {
+                                        <span class="active"><i class="zmdi zmdi-favorite"></i> @book.Likes.Count</span>
+                                    }
+                                </div>
+                                <div class="wis-numbers">
+                                    @if (book.Likes != null)
+                                    {
+                                        if (book.Likes.Any(n => n.Email.ToLower() == User.Identity.Name.ToLower()))
+                                        {
+                                            <span class="active"><i class="zmdi zmdi-favorite"></i></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="active"><i class="zmdi zmdi-favorite-outline likebook likebook-@book.Id.ToString()" data-book-id="@book.Id.ToString()"></i></span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="active"><i class="zmdi zmdi-favorite-outline likebook likebook-@book.Id.ToString()" data-book-id="@book.Id.ToString()"></i></span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wi-comments">
+
+                            <!-- Comment Listing -->
+                            <div class="list-group" id="comments-@book.Id.ToString()">
+                                @if (book.Comments != null)
+                                {
+                                    foreach (var comment in book.Comments)
+                                    {
+                                        <div class="list-group-item media">
+                                            <a href="@Url.Action("Index", "Profile", new { email = comment.User.ToLower()})" class="pull-left">
+                                                <img src="/Content/materialized/img/demo/profile-pics/5.jpg" alt="" class="lgi-img">
+                                            </a>
+                                            <div class="media-body">
+                                                <a href="@Url.Action("Index", "Profile", new { email = comment.User.ToLower()})" class="lgi-heading">@comment.UserDisplayName <small class="c-gray m-l-10"><span class="date-convert-to-local" data-date="@comment.CommentDateTime"></span></small></a>
+
+                                                <small class="lgi-text">@comment.Details</small>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                            <!-- Comment form -->
+                            <div class="wic-form">
+                                <textarea placeholder="Write something..." data-ma-action="wall-comment-open" id="comment-@book.Id"></textarea>
+
+                                <div class="wicf-actions text-right">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <button class="btn btn-sm btn-link" data-ma-action="wall-comment-close">Cancel</button>
+                                        <button class="btn btn-sm btn-primary postbtn" data-book-id="@book.Id">Post</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-sm btn-primary postbtn" disabled>Post</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+
+        <div class="col-md-4 hidden-sm hidden-xs">
+            <div class="card">
+                <div class="card-header">
+                    <h2>About me</h2>
+                </div>
+
+                <div class="card-body card-padding">
+                    Maecenas malesuada. Nam adipiscing. Etiam vitae tortor. Maecenas ullamcorper, dui et
+                    placerat feugiat, eros pede varius nisi, condimentum viverra felis nunc et lorem. <a data-ui-sref="pages.profile.profile-about">
+                        <small>Read more...</small>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card picture-list">
+                <div class="card-header">
+                    <h2>
+                        Photos
+                        <small>Cras congue nec lorem eget posuere</small>
+                    </h2>
+
+                    <ul class="actions">
+                        <li class="dropdown action-show">
+                            <a href="">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="">Refresh</a>
+                                </li>
+                                <li>
+                                    <a href="">Manage Widgets</a>
+                                </li>
+                                <li>
+                                    <a href="">Widgets Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="pl-body">
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/1.png" alt="">
+                        </a>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/2.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/3.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/4.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/5.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/6.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/7.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/8.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/9.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/1.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/2.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="">
+                            <img src="img/headers/square/3.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>
+                        Recent Comments
+                        <small>Commodo vel pharetra nisi. Donec velit libero</small>
+                    </h2>
+                </div>
+
+                <div class="list-group">
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="img/demo/profile-pics/1.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">David Belle</div>
+                            <small class="lgi-text">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="img/demo/profile-pics/2.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Jonathan Morris</div>
+                            <small class="lgi-text">Nunc quis diam diamurabitur at dolor elementum, dictum turpis vel</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="img/demo/profile-pics/3.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Fredric Mitchell Jr.</div>
+                            <small class="lgi-text">Phasellus a ante et est ornare accumsan at vel magnauis blandit turpis at augue ultricies</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="img/demo/profile-pics/4.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Glenn Jecobs</div>
+                            <small class="lgi-text">Ut vitae lacus sem ellentesque maximus, nunc sit amet varius dignissim, dui est consectetur neque</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="img/demo/profile-pics/4.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Bill Phillips</div>
+                            <small class="lgi-text">Proin laoreet commodo eros id faucibus. Donec ligula quam, imperdiet vel ante placerat</small>
+                        </div>
+                    </a>
+                    <a class="view-more" href="">View All</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>
+                        Contact Information
+                        <small>
+                            Fusce eget dolor id justo luctus commodo vel pharetra nisi. Donec velit
+                            libero
+                        </small>
+                    </h2>
+                </div>
+                <div class="card-body card-padding">
+                    <div class="pmo-contact">
+                        <ul>
+                            <li class="ng-binding"><i class="zmdi zmdi-phone"></i> 00971123456789</li>
+                            <li class="ng-binding">
+                                <i class="zmdi zmdi-email"></i> malinda.h@gmail.com
+                            </li>
+                            <li class="ng-binding">
+                                <i class="zmdi zmdi-facebook-box"></i>
+                                malinda.hollaway
+                            </li>
+                            <li class="ng-binding">
+                                <i class="zmdi zmdi-twitter"></i> malinda
+                                (twitter.com/malinda)
+                            </li>
+                            <li>
+                                <i class="zmdi zmdi-pin"></i>
+                                <address class="m-b-0 ng-binding">
+                                    44-46 Morningside Road,<br>
+                                    Edinburgh,<br>
+                                    Scotland
+                                </address>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a class="pmo-map" href="">
+                        <img src="img/demo/map.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".postbtn").click(function () {
+        var bookId = $(this).data("book-id");
+        var comment = $("#comment-" + bookId).val();
+        if (!isBlank(comment)) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddComment", "PostBook")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    BookId: bookId,
+                    Comment: comment
+                }),
+                success: function () {
+                    $("#comments-" + bookId).empty();
+                    $("#comments-" + bookId).load('@Url.Action("Comments", "Home")?bookId=' + bookId);
+                    $("#comment-" + bookId).val('');
+                },
+                dataType: 'json',
+                error: function (xhr, msg, sd) {
+                    ShowErrorMessage("Error posting comment", sd);
+                }
+            });
+        }
+    });
+
+    $(".likebook").click(function () {
+        var bookId = $(this).data("book-id");
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Like", "PostBook")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                bookId: bookId
+            }),
+            success: function () {
+                $.each($(".likebook-" + bookId), function (idx, itm) {
+                    $(itm).addClass("zmdi-favorite");
+                    $(itm).removeClass("zmdi-favorite-outline");
+                });
+            },
+            dataType: 'json',
+            error: function (xhr, msg, sd) {
+                ShowErrorMessage("Error posting comment", sd);
+            }
+        });
+    });
+</script>

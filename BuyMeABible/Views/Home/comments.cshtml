@@ -1,0 +1,15 @@
+﻿@model List<BuyMeABible.Data.Model.Comment>
+
+@foreach (var comment in Model)
+{
+    <div class="list-group-item media">
+        <a href="" class="pull-left">
+            <img src="/Content/materialized/img/demo/profile-pics/5.jpg" alt="" class="lgi-img">
+        </a>
+        <div class="media-body">
+            <a href="" class="lgi-heading">@comment.UserDisplayName <small class="c-gray m-l-10"><span class="date-convert-to-local" data-date="@comment.CommentDateTime"></span></small></a>
+
+            <small class="lgi-text">@comment.Details</small>
+        </div>
+    </div>
+}

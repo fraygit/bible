@@ -1,0 +1,48 @@
+﻿<aside id="sidebar" class="sidebar c-overflow">
+    <div class="s-profile">
+        <a href="" data-ma-action="profile-menu-toggle">
+            <div class="sp-pic">
+                <img src="/Content/materialized/img/demo/profile-pics/1.jpg" alt="">
+            </div>
+
+            <div class="sp-info">
+                Malinda Hollaway
+
+                <i class="zmdi zmdi-caret-down"></i>
+            </div>
+        </a>
+
+        <ul class="main-menu">
+            <li>
+                <a href="profile-about.html"><i class="zmdi zmdi-account"></i> View Profile</a>
+            </li>
+            <li>
+                <a href=""><i class="zmdi zmdi-input-antenna"></i> Privacy Settings</a>
+            </li>
+            <li>
+                <a href=""><i class="zmdi zmdi-settings"></i> Settings</a>
+            </li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>
+                    <a href=""><i class="zmdi zmdi-time-restore"></i> Logout</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <ul class="main-menu">
+        <li><a href="/"><i class="zmdi zmdi-home"></i> Home</a></li>
+        <li><a href="@Url.Action("Index", "PostBook")"><i class="fas fa-people-carry"></i> Gift a Bible</a></li>
+        <li><a href="@Url.Action("Index", "RequestBook")"><i class="fas fa-book-reader"></i> Request a Bible</a></li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("MyListing", "Profile")"><i class="zmdi zmdi-walk"></i> My Listing</a></li>
+            <li><a href="javascript:logout();"><i class="zmdi zmdi-walk"></i> Logout</a></li>
+        }
+        else
+        {
+            <li><a href="/login"><i class="zmdi zmdi-walk"></i> Sign-in</a></li>
+        }
+    </ul>
+</aside>

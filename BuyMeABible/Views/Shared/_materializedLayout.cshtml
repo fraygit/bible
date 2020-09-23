@@ -1,0 +1,259 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Our Bible</title>
+
+    <!-- Vendor CSS -->
+    <link href="/Content/materialized/vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
+    <link href="/Content/materialized/vendors/bower_components/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="/Content/materialized/vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link href="/Content/materialized/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    <link href="/Content/materialized/vendors/bower_components/lightgallery/dist/css/lightgallery.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="/Content/materialized/css/app_1.min.css" rel="stylesheet">
+    <link href="/Content/materialized/css/app_2.min.css" rel="stylesheet">
+    <link href="/Content/materialized/vendors/summernote/dist/summernote.css" rel="stylesheet" />
+    <script src="/Content/materialized/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/6eb070cf3a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    @Html.Action("Header", "Partial")
+
+    <section id="main">
+        @Html.Action("LeftMenu", "Partial")
+
+        <aside id="chat" class="sidebar">
+
+            <div class="chat-search">
+                <div class="fg-line">
+                    <input type="text" class="form-control" placeholder="Search People">
+                    <i class="zmdi zmdi-search"></i>
+                </div>
+            </div>
+
+            <div class="lg-body c-overflow">
+                <div class="list-group">
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left p-relative">
+                            <img class="lgi-img" src="/Content/materialized/img/demo/profile-pics/2.jpg" alt="">
+                            <i class="chat-status-busy"></i>
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Jonathan Morris</div>
+                            <small class="lgi-text">Available</small>
+                        </div>
+                    </a>
+
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="/Content/materialized/img/demo/profile-pics/1.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">David Belle</div>
+                            <small class="lgi-text">Last seen 3 hours ago</small>
+                        </div>
+                    </a>
+
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left p-relative">
+                            <img class="lgi-img" src="/Content/materialized/img/demo/profile-pics/3.jpg" alt="">
+                            <i class="chat-status-online"></i>
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Fredric Mitchell Jr.</div>
+                            <small class="lgi-text">Availble</small>
+                        </div>
+                    </a>
+
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left p-relative">
+                            <img class="lgi-img" src="/Content/materialized/img/demo/profile-pics/4.jpg" alt="">
+                            <i class="chat-status-online"></i>
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Glenn Jecobs</div>
+                            <small class="lgi-text">Availble</small>
+                        </div>
+                    </a>
+
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="/Content/materialized/img/demo/profile-pics/5.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Bill Phillips</div>
+                            <small class="lgi-text">Last seen 3 days ago</small>
+                        </div>
+                    </a>
+
+                    <a class="list-group-item media" href="">
+                        <div class="pull-left">
+                            <img class="lgi-img" src="/Content/materialized/img/demo/profile-pics/6.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lgi-heading">Wendy Mitchell</div>
+                            <small class="lgi-text">Last seen 2 minutes ago</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <section id="content">
+            @RenderBody()
+
+        </section>
+    </section>
+
+    <footer id="footer">
+        Copyright &copy; 2020 BibleTeam
+
+        <ul class="f-menu">
+            <li><a href="">Home</a></li>
+            <li><a href="">Dashboard</a></li>
+            <li><a href="">Reports</a></li>
+            <li><a href="">Support</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+    </footer>
+
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="preloader pls-blue">
+            <svg class="pl-circular" viewBox="25 25 50 50">
+                <circle class="plc-path" cx="50" cy="50" r="20" />
+            </svg>
+
+            <p>Please wait...</p>
+        </div>
+    </div>
+
+    <!-- Older IE warning message -->
+    <!--[if lt IE 9]>
+        <div class="ie-warning">
+            <h1 class="c-white">Warning!!</h1>
+            <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+            <div class="iew-container">
+                <ul class="iew-download">
+                    <li>
+                        <a href="http://www.google.com/chrome/">
+                            <img src="img/browsers/chrome.png" alt="">
+                            <div>Chrome</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.mozilla.org/en-US/firefox/new/">
+                            <img src="img/browsers/firefox.png" alt="">
+                            <div>Firefox</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.opera.com">
+                            <img src="img/browsers/opera.png" alt="">
+                            <div>Opera</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.apple.com/safari/">
+                            <img src="img/browsers/safari.png" alt="">
+                            <div>Safari</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                            <img src="img/browsers/ie.png" alt="">
+                            <div>IE (New)</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <p>Sorry for the inconvenience!</p>
+        </div>
+    <![endif]-->
+    <!-- Javascript Libraries -->
+
+    <script src="/Content/materialized/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="/Content/materialized/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/Content/materialized/vendors/bower_components/Waves/dist/waves.min.js"></script>
+    <script src="/Content/materialized/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+    <script src="/Content/materialized/vendors/bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="/Content/materialized/vendors/bower_components/lightgallery/lib/lightgallery-all.min.js"></script>
+    <script src="/Content/materialized/vendors/bower_components/autosize/dist/autosize.min.js"></script>
+    <script src="/Content/materialized/vendors/summernote/dist/summernote-updated.min.js"></script>
+    <!-- Placeholder for IE9 -->
+    <!--[if IE 9 ]>
+        <script src="vendors/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+    <![endif]-->
+    <script src="/Content/materialized/vendors/moment.js"></script>
+    <script src="/Content/materialized/js/app.min.js"></script>
+
+    <script src="/Content/materialized/js/common.js"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $.each($(".date-convert-to-local"), function (idx, itm) {
+                var localDate = $(itm).data("date");
+                if (moment(localDate).isValid()) {
+
+                    if (moment.duration(new Date()).asHours() < 1) {
+                        $(itm).text(moment.utc(localDate).local().startOf('hour').fromNow());
+                    }
+                    else {
+                        $(itm).text('on ' + moment.utc(localDate).local().format("MMM D YYYY") + ' at ' + moment.utc(localDate).local().format("hh:mm A"));
+                    }
+                }
+            });
+        })
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1222830284743728',
+            cookie: true,                     // Enable cookies to allow the server to access the session.
+            xfbml: true,                     // Parse social plugins on this webpage.
+            version: 'v8.0'           // Use this Graph API version for this call.
+        });
+
+    };
+
+
+    function logout() {
+        FB.getLoginStatus(function (response) {
+            if (response.status === 'connected') {
+                // the user is logged in and has authenticated your
+                // app, and response.authResponse supplies
+                // the user's ID, a valid access token, a signed
+                // request, and the time the access token 
+                // and signed request each expire
+                var uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+
+                FB.api('/' + uid + '/permissions', 'delete', function (response) { });
+                document.location.href = "/login/logout"
+
+            } else if (response.status === 'not_authorized') {
+                // the user is logged in to Facebook, 
+                // but has not authenticated your app
+            } else {
+                // the user isn't logged in to Facebook.
+            }
+        });
+    }
+
+    </script>
+
+</body>
+</html>
