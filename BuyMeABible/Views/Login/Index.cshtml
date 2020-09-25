@@ -3,18 +3,37 @@
 }
 <!-- Login -->
 
-
 <div class="lc-block toggled" id="l-login">
+    <div class="lcb-form">
+        <div class="input-group m-b-20">
+            <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+            <div class="fg-line">
+                <input type="text" class="form-control" placeholder="Email" id="txtEmail">
+            </div>
+        </div>
 
+        <div class="input-group m-b-20">
+            <span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
+            <div class="fg-line">
+                <input type="password" class="form-control" placeholder="Password" id="txtPassword">
+            </div>
+        </div>
 
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-    </fb:login-button>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="">
+                <i class="input-helper"></i>
+                Keep me signed in
+            </label>
+        </div>
 
+        <a id="btnSignIn" class="btn btn-login btn-success btn-float waves-effect waves-circle waves-float"><i class="zmdi zmdi-arrow-forward"></i></a>
+    </div>
 
-    @*<div class="lcb-navigation">
-            <a href="" data-ma-action="login-switch" data-ma-block="#l-register"><i class="zmdi zmdi-plus"></i> <span>Register</span></a>
-            <a href="" data-ma-action="login-switch" data-ma-block="#l-forget-password"><i>?</i> <span>Forgot Password</span></a>
-        </div>*@
+    <div class="lcb-navigation">
+        <a href="" data-ma-action="login-switch" data-ma-block="#l-register"><i class="zmdi zmdi-plus"></i> <span>Register</span></a>
+        <a href="" data-ma-action="login-switch" data-ma-block="#l-forget-password"><i>?</i> <span>Forgot Password</span></a>
+    </div>
 </div>
 
 <!-- Register -->
@@ -71,79 +90,3 @@
     </div>
 </div>
 
-<div id="status">
-</div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-<script>
-
-    function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-        console.log('statusChangeCallback');
-        console.log(response);                   // The current login status of the person.
-        if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-            testAPI();
-        } else {                                 // Not logged into your webpage or we are unable to tell.
-            document.getElementById('status').innerHTML = 'Please log ' +
-                'into this webpage.';
-        }
-    }
-
-
-    function checkLoginState() {               // Called when a person is finished with the Login Button.
-        FB.getLoginStatus(function (response) {   // See the onlogin handler
-            statusChangeCallback(response);
-        });
-    }
-
-
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '1222830284743728',
-            cookie: true,                     // Enable cookies to allow the server to access the session.
-            xfbml: true,                     // Parse social plugins on this webpage.
-            version: 'v8.0'           // Use this Graph API version for this call.
-        });
-
-
-        FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
-            statusChangeCallback(response);        // Returns the login status.
-        });
-    };
-
-    function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-        console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me', { fields: 'first_name,last_name,email' }, function (response) {
-
-            var signInData = {
-                Email: response.email,
-                FirstName: response.first_name,
-                LastName: response.last_name
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("LoginRegister", "Login")",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify(signInData),
-                success: function (d) {
-                    if (d.IsSuccess == true) {
-                        document.location.href = "/";
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                }
-            });
-
-            console.log('Successful login for: ' + response.name);
-            document.getElementById('status').innerHTML =
-                'Thanks for logging in, ' + response.name + '!';
-        });
-    }
-
-    function logout() {
-        FB.logout(function (response) {
-            // Person is now logged out
-        });
-    }
-
-</script>
